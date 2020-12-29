@@ -1,3 +1,6 @@
+const img = document.createElement('img');
+document.body.appendChild(img);
+
 const url = 'https://xkcd.now.sh/?comic=latest';
 
 function humor(){
@@ -25,6 +28,7 @@ function humor(){
 function homorAxiosVersion () {
     axios.get(url)
       .then(function (response) {
+        img.src = response.data.img;
        console.log(response)
       })
     
@@ -38,5 +42,3 @@ function homorAxiosVersion () {
 }
 humor()
 
-const img = document.createElement('img');
-document.body.appendChild(img);
