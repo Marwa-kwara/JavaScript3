@@ -29,8 +29,6 @@ placeholderRepos.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 :
 
 //show more  repo details .
 
-
-
 const reponame = document.getElementById('name');
 const description = document.getElementById('Description');
 const forks = document.getElementById('Forks');
@@ -45,27 +43,40 @@ for ( let i = 0 ;i < placeholderRepos.length; i++){
 }
 
 
-selectRepo.addEventListener('change' ,() =>{
- switch(repo.value){
-  case 'AndAnotherOne':
-  reponame.innerText = placeholderRepos[0].name;
-  description.innerText = placeholderRepos[0].description;
-  forks.innerText = placeholderRepos[0].forks;
-  updated.innerText = placeholderRepos[0].updated;
-  break;
+selectRepo.addEventListener('change', () => {
+  const repo = placeholderRepos.find(repo => {
+    return repo.name === selectRepo.value;
+  });
+  if (!repo) {
+    throw new Error("weird, this should not happen");
+  }
+  reponame.innerText = repo.name;
+  description.innerText = repo.description;
+  forks.innerText = repo.forks;
+  updated.innerText = repo.updated;
+});
 
-  case 'HYF-Is-The-Best':
-  reponame.innerText = placeholderRepos[1].name;
-  description.innerText = placeholderRepos[1].description;
-  forks.innerText = placeholderRepos[1].forks;
-  updated.innerText = placeholderRepos[1].updated;
-  break;
+// selectRepo.addEventListener('change' ,() =>{
+//  switch(repo.value){
+//   case 'AndAnotherOne':
+//   reponame.innerText = placeholderRepos[0].name;
+//   description.innerText = placeholderRepos[0].description;
+//   forks.innerText = placeholderRepos[0].forks;
+//   updated.innerText = placeholderRepos[0].updated;
+//   break;
 
-  case 'SampleRepo1':
-  reponame.innerText = placeholderRepos[2].name;
-  description.innerText = placeholderRepos[2].description;
-  forks.innerText = placeholderRepos[2].forks;
-  updated.innerText = placeholderRepos[2].updated;
-  break;
-}
-} )
+//   case 'HYF-Is-The-Best':
+//   reponame.innerText = placeholderRepos[1].name;
+//   description.innerText = placeholderRepos[1].description;
+//   forks.innerText = placeholderRepos[1].forks;
+//   updated.innerText = placeholderRepos[1].updated;
+//   break;
+
+//   case 'SampleRepo1':
+//   reponame.innerText = placeholderRepos[2].name;
+//   description.innerText = placeholderRepos[2].description;
+//   forks.innerText = placeholderRepos[2].forks;
+//   updated.innerText = placeholderRepos[2].updated;
+//   break;
+// }
+// } )
