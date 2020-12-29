@@ -1,16 +1,29 @@
+const xmlButton = document.getElementById('xmlButton');
+const axiosButton = document.getElementById('axiosButton');
+
+
 // xml http request 
 
 const url = 'https://dog.ceo/api/breeds/image/random';
 
-function randomPhoto(){
+function creatPhoto(){
     const xhr = new XMLHttpRequest();
      xhr.responseType = 'json';
 
      xhr.open('GET', url);
      xhr.send();
      xhr.onload = ()=>{
-         img.src = xhr.response.message;
-         img.style.width = '200px'
+      
+      const photoList = document.createElement('ul');
+      const li = document.createElement('li');
+      const img = document.createElement('img');
+
+      li.appendChild(img);
+      photoList.appendChild(li);
+      document.body.appendChild(photoList);
+
+      img.src = xhr.response.message;
+      img.style.width = '200px'
      }
      
      xhr.onerror = () => {
@@ -20,9 +33,17 @@ function randomPhoto(){
 
 
     // Axios http request
-function randomPhotoAxiosVersion () {
+function creatPhotoAxiosVersion () {
 axios.get(url)
   .then(function (response) {
+    const photoList = document.createElement('ul');
+    const li = document.createElement('li');
+    const img = document.createElement('img');
+
+   li.appendChild(img);
+   photoList.appendChild(li);
+   document.body.appendChild(photoList);
+
     img.src = response.data.message;
     img.style.width = '200px'
   })
@@ -36,25 +57,10 @@ axios.get(url)
   });
 }
 
-
-
-const xmlButton = document.getElementById('xmlButton');
-const axiosButton = document.getElementById('axiosButton');
-
-const ul = document.createElement('ul');
-const li = document.createElement('li');
-const img = document.createElement('img');
-
-
-li.appendChild(img);
-ul.appendChild(li);
-document.body.appendChild(ul);
-
-
 xmlButton.onclick = function(){
- return randomPhoto()
+ return creatPhoto()
 }
 
 axiosButton.onclick = function(){
-  return randomPhotoAxiosVersion()
+  return creatPhotoAxiosVersion()
 }
