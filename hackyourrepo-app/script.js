@@ -89,7 +89,6 @@ repoInfo.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
 
  for ( let i = 0 ;i < repoInfo.length; i++){
   const option = document.createElement('option')
-  option.value = repoInfo[i].name;
   option.innerText = repoInfo[i].name;
   select.appendChild(option)
 } 
@@ -107,48 +106,41 @@ select.addEventListener('change',()=>{
   repoForks.innerText = repo.forks;
   repoUpdated.innerText = repo.updated_at
 });
+}
 
-// fetch the contributors
 
-function fetchContributors (){
-  const contributorsUrl = repoInfo[value].contributors_url;
 
+function selectContributor(repositoryName) {
+  const contributorsUrl = `https://api.github.com/repos/HackYourFuture/${repositoryName}/contributors`;
   fetch(contributorsUrl)
-  .then(response => {
-     return response.json();
-   })
-   .then(data => {
-       console.log(data);
-       selectContributors(repoInfo);
-   })
-   .catch(error => {
-     console.log('err', error);
-   });
+  .then(response => response.json())
+  .then((jsonData) => {
+    jsonData.forEach((contributor) => {
+        const contributorCard = document.createElement('div');
+        contributorCard.id = "contributorCard";
 
-function selectContributors (){
-  repoInfo.forEach(element => {
-    const contributorCard = document.createElement('div');
+        const contributorImage = document.createElement('img');
+        contributorImage.src = contributor.avatar_url;
 
-    const contributorImage = document.createElement('img');
-    contributorImage.src = contributor.avatar_url;
+        const contributorName = document.createElement('a');
+        contributorName.innerText = contributor.login;
+        contributorName.href = contributor.html_url;
 
-    const contributorName = document.createElement('a');
-    contributorName.innerText = contributor.login;
-    contributorName.href = contributor.html_url;
-
-    const contributions = document.createElement('div');
-    contributions.innerText = contributor.contributions;
-
-    contributorCard.append(contributorImage,contributorName,contributions);
-    contributorsSection.appendChild(contributorCard)
-  });
-
+        const contributions = document.createElement('div');
+        contributions.innerText = contributor.contributions;
+  
+        contributorCard.append(contributorImage,contributorName,contributions);
+        contributorsSection.appendChild(contributorCard)
+      })
+  })
+  select.addEventListener('change', (e) => {
+  selectContributor(e.target[e.target.value])
+})
 }
+fetchData()
+selectContributor()
 }
-fetchContributors();
-}
-fetchData();
-}
+//
 
 
 window.addEventListener("load", main)
