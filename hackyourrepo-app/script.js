@@ -82,7 +82,7 @@ function fetchData() {
    .catch(error => {
      console.log('err', error);
    });
-}
+  }
 
 function selectOption (repoInfo){
 repoInfo.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
@@ -93,7 +93,7 @@ repoInfo.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
   option.innerText = repoInfo[i].name;
   select.appendChild(option)
 } 
-}
+
 
 select.addEventListener('change',()=>{
   const repo = repoInfo.find(repo => {
@@ -108,11 +108,10 @@ select.addEventListener('change',()=>{
   repoUpdated.innerText = repo.updated_at
 });
 
-fetchData()
-
 // fetch the contributors
+
 function fetchContributors (){
-  const contributorsUrl = repoInfo[value].contributors_url;
+  const contributorsUrl = value.contributors_url;
 
   fetch(contributorsUrl)
   .then(response => {
@@ -120,14 +119,14 @@ function fetchContributors (){
    })
    .then(data => {
        console.log(data);
-       selectContributors();
+       selectContributors(repoInfo);
    })
    .catch(error => {
      console.log('err', error);
    });
 
 function selectContributors (){
-  repoInfo.forEach(element => {
+  array.forEach(element => {
     const contributorCard = document.createElement('div');
 
     const contributorImage = document.createElement('img');
@@ -146,8 +145,12 @@ function selectContributors (){
 
 }
 }
-fetchContributors()
+fetchContributors();
+}
+fetchData();
+
 
 }
+
 
 window.addEventListener("load", main)
