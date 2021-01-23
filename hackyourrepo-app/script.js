@@ -111,7 +111,7 @@ select.addEventListener('change',()=>{
 // fetch the contributors
 
 function fetchContributors (){
-  const contributorsUrl = value.contributors_url;
+  const contributorsUrl = repoInfo[value].contributors_url;
 
   fetch(contributorsUrl)
   .then(response => {
@@ -126,7 +126,7 @@ function fetchContributors (){
    });
 
 function selectContributors (){
-  array.forEach(element => {
+  repoInfo.forEach(element => {
     const contributorCard = document.createElement('div');
 
     const contributorImage = document.createElement('img');
@@ -148,8 +148,6 @@ function selectContributors (){
 fetchContributors();
 }
 fetchData();
-
-
 }
 
 
